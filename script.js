@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
             const spans = menuToggle.querySelectorAll('span');
-            if(spans.length > 2) {
+            if(spans && spans.length > 2) {
                 spans[0].style.transform = 'none';
                 spans[1].style.opacity = '1';
                 spans[2].style.transform = 'none';
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Reveal animations on scroll
     const observerOptions = {
-        threshold: 0.15
+        threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -82,9 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    document.querySelectorAll('.service-card, .testimonial-card, .about-image, .about-content > div:last-child').forEach(el => {
+    document.querySelectorAll('.service-card, .testimonial-card, .about-image, #about h2, #about p, .stat-item').forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(40px)';
+        el.style.transform = 'translateY(30px)';
         el.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
         observer.observe(el);
     });
