@@ -114,12 +114,13 @@ nav {
     background-image: url('https://ytttxtzoazhogljousvc.supabase.co/storage/v1/object/public/site-assets/20bf4f88-5fdd-4e6b-acec-772eee153dfa/hero-shot.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll !important;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 0 2rem;
+    margin: 0;
 }
 
 #hero::before {
@@ -254,7 +255,7 @@ section {
 .about-image {
     width: 100%;
     height: 500px;
-    background-image: url('https://ytttxtzoazhogljousvc.supabase.co/storage/v1/object/public/site-assets/20bf4f88-5fdd-4e6b-acec-772eee153dfa/about-koby.png');
+    background-image: url('https://ytttxtzoazhogljousvc.supabase.co/storage/v1/object/public/site-assets/20bf4f88-5fdd-4e6b-acec-772eee153dfa/user-upload-1772713227199-0.jpg');
     background-size: cover;
     background-position: center;
     border-radius: var(--border-radius);
@@ -293,7 +294,7 @@ section {
     background-image: url('https://ytttxtzoazhogljousvc.supabase.co/storage/v1/object/public/site-assets/20bf4f88-5fdd-4e6b-acec-772eee153dfa/footer.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: scroll !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -349,7 +350,7 @@ footer {
     color: var(--text-muted);
 }
 
-/* Responsive */
+/* Mobile Responsive Adjustments */
 @media (max-width: 992px) {
     .about-content { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -376,14 +377,21 @@ footer {
     #cta-banner { min-height: 50vh !important; }
 }
 
-/* Reset image behaviors for hero/cta as requested */
-#hero, #cta-banner {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin: 0;
+/* Section Guardrails */
+html, body { 
+    margin: 0; 
+    padding: 0; 
 }
 
+section, header, footer, nav { 
+    margin: 0; 
+}
+
+#hero, #cta-banner {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 /* ══ Guardrail: flush sections, background-image sizing ══ */
 html, body { margin: 0; padding: 0; }
