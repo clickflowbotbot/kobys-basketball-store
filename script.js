@@ -1,91 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
+    // Mobile Menu
     const menuToggle = document.getElementById('mobile-menu');
     const navLinks = document.querySelector('.nav-links');
 
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            
-            // Mobile menu icons animation
-            const spans = menuToggle.querySelectorAll('span');
-            if (navLinks.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -8px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
+            menuToggle.classList.toggle('active');
         });
     }
 
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            const spans = menuToggle.querySelectorAll('span');
-            if(spans && spans.length > 2) {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
-        });
-    });
-
-    // Smooth Scroll for Navigation Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if(targetId === '#') return;
-            
-            const target = document.querySelector(targetId);
-            if (target) {
-                const navHeight = document.querySelector('nav').offsetHeight;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // Header transparency & scroll effects
-    const nav = document.querySelector('nav');
+    // Nav Scroll Effect
+    const nav = id => document.getElementById(id);
+    const mainNav = nav('main-nav');
+    
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            nav.style.padding = '0.8rem 0';
-            nav.style.background = 'rgba(255, 255, 255, 0.98)';
-            nav.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+        if (window.scrollY > 100) {
+            mainNav.classList.add('scrolled');
         } else {
-            nav.style.padding = '1.2rem 0';
-            nav.style.background = 'rgba(255, 255, 255, 0.95)';
-            nav.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+            mainNav.classList.remove('scrolled');
         }
     });
 
-    // Reveal animations on scroll
+    // Reveal on Scroll
     const observerOptions = {
-        threshold: 0.1
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('active');
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    document.querySelectorAll('.service-card, .testimonial-card, .about-image, #about h2, #about p, .stat-item').forEach(el => {
+    const revealElements = document.querySelectorAll('.service-card, .testimonial-card, .about-image, .stat-item, h2');
+    revealElements.forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)';
+        el.style.transform = 'translateY(40px)';
+        el.style.transition = 'all 1s cubic-bezier(0.165, 0.84, 0.44, 1)';
         observer.observe(el);
     });
+
+    // Custom Scroll reveal class injection
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    };
+
+    const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+    revealElements.forEach(el => scrollObserver.observe(el));
 });
